@@ -195,3 +195,20 @@ int origem, destino;
             printf("Haste inválida! Use A, B, ou C.\n");
             continue;
         }
+if (movimentoValido(hastes, origem, destino)) {
+            realizarMovimento(hastes, origem, destino);
+            movimentos++;
+
+            if (verificarFimDeJogo(hastes, numDiscos)) {
+                printf("Parabéns! Você completou o jogo!\n");
+                break;
+            }
+        } else {
+            printf("Movimento inválido!\n");
+        }
+
+        printf("Movimentos realizados: %d\n", movimentos);
+    }
+
+    return 0;
+}
