@@ -170,3 +170,28 @@ int origem, destino;
             if (passosSolucao[proximoPasso][0] != '\0') {
                 printf("%s\n", passosSolucao[proximoPasso]);
                 proximoPasso++;
+   }
+        }
+
+        imprimirHastes(hastes, numDiscos);
+
+        printf("Informe de qual haste você deseja mover a peça \n(A, B, C ou 'R' para reiniciar): ");
+        scanf(" %c", &origemChar);
+
+        if (toupper(origemChar) == 'R') {
+            reiniciarJogo(hastes, numDiscos);
+            printf("O jogo foi reiniciado.\n");
+            movimentos = 0;
+            continue;
+        }
+
+        printf("Informe para qual haste você deseja mover a peça (A, B, C): ");
+        scanf(" %c", &destinoChar);
+
+        origem = hasteParaIndice(origemChar);
+        destino = hasteParaIndice(destinoChar);
+
+        if (origem == -1 || destino == -1) {
+            printf("Haste inválida! Use A, B, ou C.\n");
+            continue;
+        }
