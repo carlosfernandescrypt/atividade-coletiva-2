@@ -1,4 +1,4 @@
-# Atividade Coletiva 2 - Estrutura de Dados
+# Atividade Coletiva 2 - Estrutura de Dados (Jogo Torre de Hanoi)
 
 ### Uso
 
