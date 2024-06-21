@@ -3,14 +3,11 @@
 #include <math.h>
 #include <ctype.h>
 #include <string.h>
-//#include "main.h"
+#include "main.h"
 
-#define MAX_DISCOS 64
+#define MAX_DISCOS 30
 
-typedef struct {
-    int discos[MAX_DISCOS];
-    int topo;
-} Pilha;
+typedef struct Pilha;
 
 // Função para inicializar uma pilha
 void inicializarPilha(Pilha *p) {
@@ -26,6 +23,7 @@ int pilhaVazia(Pilha *p) {
 int pilhaCheia(Pilha *p) {
     return p->topo == MAX_DISCOS - 1;
 }
+
 // Função para empilhar um disco
 void empilhar(Pilha *p, int disco) {
     if (!pilhaCheia(p)) {
@@ -64,21 +62,27 @@ void imprimirHastes(Pilha hastes[3], int numDiscos) {
     }
 }
 
+// Função para verificar se o movimento é válido
 int movimentoValido(Pilha hastes[3], int origem, int destino) {
     int discoOrigem = topo(&hastes[origem]);
     int discoDestino = topo(&hastes[destino]);
 
-return discoOrigem != -1 && (discoDestino == -1 || discoOrigem < discoDestino);
+    // Verifica se há disco na origem e se o movimento é válido
+    return discoOrigem != -1 && (discoDestino == -1 || discoOrigem < discoDestino);
 }
 
+// Função para realizar o movimento
 void realizarMovimento(Pilha hastes[3], int origem, int destino) {
     int discoMover = desempilhar(&hastes[origem]);
     if (discoMover != -1) {
         empilhar(&hastes[destino], discoMover);
     }
 }
+
 char passosSolucao[1000][100];
-int proximoPasso = 0;
+int proximoPasso = 0; // Índice do próximo passo a ser exibido
+
+// Função para adicionar um passo à lista
 void adicionarPasso(char passo[]) {
     static int indice = 0;
     strcpy(passosSolucao[indice], passo);
@@ -100,6 +104,7 @@ void resolverTorreHanoi(int numDiscos, int origem, int destino, int auxiliar) {
     resolverTorreHanoi(numDiscos - 1, auxiliar, destino, origem);
 }
 
+// Função para converter a entrada da haste de caractere para índice
 int hasteParaIndice(char haste) {
     haste = toupper(haste);
     if (haste == 'A') return 0;
@@ -163,14 +168,15 @@ int main() {
     if (opcao == 'S' || opcao == 's') {
         resolverTorreHanoi(numDiscos, 0, 2, 1);
     }
-int origem, destino;
+
+    int origem, destino;
     char origemChar, destinoChar;
     while (1) {
         if (opcao == 'S' || opcao == 's') {
             if (passosSolucao[proximoPasso][0] != '\0') {
                 printf("%s\n", passosSolucao[proximoPasso]);
-                proximoPasso++;
-   }
+                proximoPasso++; // Incrementa o índice do próximo passo
+            }
         }
 
         imprimirHastes(hastes, numDiscos);
@@ -195,7 +201,9 @@ int origem, destino;
             printf("Haste inválida! Use A, B, ou C.\n");
             continue;
         }
-if (movimentoValido(hastes, origem, destino)) {
+
+        // Verificar se o movimento é válido e realizar o movimento
+        if (movimentoValido(hastes, origem, destino)) {
             realizarMovimento(hastes, origem, destino);
             movimentos++;
 
